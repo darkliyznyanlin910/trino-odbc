@@ -35,11 +35,12 @@ cmake $SRC_DIR `
     -D CMAKE_POLICY_VERSION_MINIMUM=3.5 `
     -D BUILD_ONLY="core;sts;timestream-query;timestream-write" `
     -D LEGACY_BUILD=ON `
-    -D ENABLE_UNITY_BUILD="ON" `
-    -D CUSTOM_MEMORY_MANAGEMENT="OFF" `
-    -D ENABLE_RTTI="OFF" `
-    -D ENABLE_TESTING="OFF" `
-    -D CPP_STANDARD="17"
+    -D BUILD_SHARED_LIBS=ON `
+    -D ENABLE_UNITY_BUILD=ON `
+    -D CUSTOM_MEMORY_MANAGEMENT=OFF `
+    -D ENABLE_RTTI=OFF `
+    -D ENABLE_TESTING=OFF `
+    -D CPP_STANDARD=17
 
 # Build AWS SDK and install to $INSTALL_DIR 
 $msbuild = &"${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe | select-object -first 1
