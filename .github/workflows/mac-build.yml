@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 env:
   CI_OUTPUT_PATH: "ci-output"
@@ -36,105 +37,105 @@ env:
   # OKTA_USER_PWD: ${{secrets.OKTA_USER_PWD}}
   # OKTA_APP_ID: ${{secrets.OKTA_APP_ID}}
   # OKTA_ROLE_ARN: ${{secrets.OKTA_ROLE_ARN}}
-  # OKTA_IDP_ARN: ${{secrets.OKTA_IDP_ARN}}  
+  # OKTA_IDP_ARN: ${{secrets.OKTA_IDP_ARN}}
 
 jobs:
   build-mac:
     runs-on: macos-11
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: run-cppcheck
-      run: |
-        brew install cppcheck
-        sh run_cppcheck.sh
-    - name: upload-cppcheck-results
-      if: failure()
-      uses: actions/upload-artifact@v3
-      with:
-        name: cppcheck-results
-        path: cppcheck-results.log
+      - name: run-cppcheck
+        run: |
+          brew install cppcheck
+          sh run_cppcheck.sh
+      - name: upload-cppcheck-results
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cppcheck-results
+          path: cppcheck-results.log
 
-    - name: get-dependencies
-      run: |
-        brew tap homebrew/services
-        brew unlink unixodbc
-        brew install libiodbc
-        brew link --overwrite --force libiodbc
-        brew install cmake
-        brew install boost
+      - name: get-dependencies
+        run: |
+          brew tap homebrew/services
+          brew unlink unixodbc
+          brew install libiodbc
+          brew link --overwrite --force libiodbc
+          brew install cmake
+          brew install boost
 
-    - name: configure-and-build-driver
-      run: |
-        ./build_mac_release64.sh
+      - name: configure-and-build-driver
+        run: |
+          ./build_mac_release64.sh
 
-    - name: update-environment-with-ODBC_DRIVER_VERSION
-      run: |
-        read -r ODBC_DRIVER_VERSION < ./src/ODBC_DRIVER_VERSION.txt
-        echo "ODBC_DRIVER_VERSION=$ODBC_DRIVER_VERSION" >> $GITHUB_ENV
+      - name: update-environment-with-ODBC_DRIVER_VERSION
+        run: |
+          read -r ODBC_DRIVER_VERSION < ./src/ODBC_DRIVER_VERSION.txt
+          echo "ODBC_DRIVER_VERSION=$ODBC_DRIVER_VERSION" >> $GITHUB_ENV
 
-    - name: upload-package
-      uses: actions/upload-artifact@v3
-      with:
-        name: AmazonTrinoODBC-${{env.ODBC_DRIVER_VERSION}}.pkg
-        path: ./cmake-build64/AmazonTrinoODBC-${{env.ODBC_DRIVER_VERSION}}.pkg
+      - name: upload-package
+        uses: actions/upload-artifact@v3
+        with:
+          name: AmazonTrinoODBC-${{env.ODBC_DRIVER_VERSION}}.pkg
+          path: ./cmake-build64/AmazonTrinoODBC-${{env.ODBC_DRIVER_VERSION}}.pkg
 
-    - name: register-odbc-driver
-      run: |
-        chmod +x scripts/register_driver_unix.sh
-        ./scripts/register_driver_unix.sh
+      - name: register-odbc-driver
+        run: |
+          chmod +x scripts/register_driver_unix.sh
+          ./scripts/register_driver_unix.sh
 
-    - name: configure-aws-credentials-for-tests
-      if: success()
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-west-2
+      - name: configure-aws-credentials-for-tests
+        if: success()
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
 
-    - name: run-unit-tests
-      id: rununittests
-      run: |
-        mkdir -p "${{env.TRINO_LOG_PATH}}"
-        export DYLD_LIBRARY_PATH=${{env.ODBC_LIB_PATH}}:$DYLD_LIBRARY_PATH     
-        ./build/odbc/bin/trino-odbc-unit-tests --catch_system_errors=false
+      - name: run-unit-tests
+        id: rununittests
+        run: |
+          mkdir -p "${{env.TRINO_LOG_PATH}}"
+          export DYLD_LIBRARY_PATH=${{env.ODBC_LIB_PATH}}:$DYLD_LIBRARY_PATH     
+          ./build/odbc/bin/trino-odbc-unit-tests --catch_system_errors=false
 
-    - name: upload-unit-test-report
-      if: always()
-      uses: EnricoMi/publish-unit-test-result-action/composite@v1.30
-      with:
-        check_name: "MacOS Big Sur 11 Build Unit Test Results Check"
-        comment_title: "MacOS Big Sur 11 Build Unit Test Results"
-        files: ./odbc_unit_test_result.xml
+      - name: upload-unit-test-report
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1.30
+        with:
+          check_name: "MacOS Big Sur 11 Build Unit Test Results Check"
+          comment_title: "MacOS Big Sur 11 Build Unit Test Results"
+          files: ./odbc_unit_test_result.xml
 
-    - name: upload-unit-test-file
-      if: always() && (steps.rununittests.outcome == 'failure')
-      uses: actions/upload-artifact@v3
-      with:
-        name: odbc-unit-test-results
-        path: |
-          ./odbc_unit_test_result.xml
-          ./build/odbc/logs/trino_odbc_*.log
+      - name: upload-unit-test-file
+        if: always() && (steps.rununittests.outcome == 'failure')
+        uses: actions/upload-artifact@v3
+        with:
+          name: odbc-unit-test-results
+          path: |
+            ./odbc_unit_test_result.xml
+            ./build/odbc/logs/trino_odbc_*.log
 
-    - name: run-integration-tests
-      id: runintegrationtests
-      run: |
-        export DYLD_LIBRARY_PATH=${{env.ODBC_LIB_PATH}}:$DYLD_LIBRARY_PATH     
-        ./build/odbc/bin/trino-odbc-integration-tests --catch_system_errors=false
+      - name: run-integration-tests
+        id: runintegrationtests
+        run: |
+          export DYLD_LIBRARY_PATH=${{env.ODBC_LIB_PATH}}:$DYLD_LIBRARY_PATH     
+          ./build/odbc/bin/trino-odbc-integration-tests --catch_system_errors=false
 
-    - name: upload-integration-test-report
-      if: always()
-      uses: EnricoMi/publish-unit-test-result-action/composite@v1.30
-      with:
-        check_name: "MacOS Big Sur 11 Build Integration Test Results Check"
-        comment_title: "MacOS Big Sur 11 Build Integration Test Results"
-        files: ./odbc_test_result.xml
+      - name: upload-integration-test-report
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1.30
+        with:
+          check_name: "MacOS Big Sur 11 Build Integration Test Results Check"
+          comment_title: "MacOS Big Sur 11 Build Integration Test Results"
+          files: ./odbc_test_result.xml
 
-    - name: upload-integration-test-file
-      if: always() && (steps.runintegrationtests.outcome == 'failure')
-      uses: actions/upload-artifact@v3
-      with:
-        name: odbc-integration-test-results
-        path: |
-          ./odbc_test_result.xml
-          ./build/odbc/logs/trino_odbc_*.log
+      - name: upload-integration-test-file
+        if: always() && (steps.runintegrationtests.outcome == 'failure')
+        uses: actions/upload-artifact@v3
+        with:
+          name: odbc-integration-test-results
+          path: |
+            ./odbc_test_result.xml
+            ./build/odbc/logs/trino_odbc_*.log

@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 env:
   CI_OUTPUT_PATH: "ci-output"
@@ -34,247 +35,247 @@ env:
   # OKTA_USER_PWD: ${{secrets.OKTA_USER_PWD}}
   # OKTA_APP_ID: ${{secrets.OKTA_APP_ID}}
   # OKTA_ROLE_ARN: ${{secrets.OKTA_ROLE_ARN}}
-  # OKTA_IDP_ARN: ${{secrets.OKTA_IDP_ARN}}  
+  # OKTA_IDP_ARN: ${{secrets.OKTA_IDP_ARN}}
 
 jobs:
   build-linux64:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Get latest version of CMake
-      uses: lukka/get-cmake@latest
+      - name: Get latest version of CMake
+        uses: lukka/get-cmake@latest
 
-    - name: run-cppcheck
-      run: |
-        sudo apt install cppcheck
-        sh run_cppcheck.sh
-  
-    - name: upload-cppcheck-results
-      if: failure()
-      uses: actions/upload-artifact@v2
-      with:
-        name: cppcheck-results
-        path: cppcheck-results.log
+      - name: run-cppcheck
+        run: |
+          sudo apt install cppcheck
+          sh run_cppcheck.sh
 
-    - name: get-dependencies
-      if: success()
-      run: |
-        sudo apt update
-        sudo apt install libcurl4-openssl-dev libssl-dev uuid-dev zlib1g-dev libpulse-dev linux-headers-$(uname -r) gcc gcc-multilib  g++ g++-multilib linux-headers-$(uname -r) build-essential valgrind libboost-all-dev libsasl2-dev lcov
-   
-    - name: configure-and-build-driver
-      run: |
-        ./build_linux_release64_deb.sh
+      - name: upload-cppcheck-results
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cppcheck-results
+          path: cppcheck-results.log
 
-    - name: update-environment-with-ODBC_DRIVER_VERSION
-      run: |
-        read -r ODBC_DRIVER_VERSION < ./src/ODBC_DRIVER_VERSION.txt
-        echo "ODBC_DRIVER_VERSION=$ODBC_DRIVER_VERSION" >> $GITHUB_ENV
+      - name: get-dependencies
+        if: success()
+        run: |
+          sudo apt update
+          sudo apt install libcurl4-openssl-dev libssl-dev uuid-dev zlib1g-dev libpulse-dev linux-headers-$(uname -r) gcc gcc-multilib  g++ g++-multilib linux-headers-$(uname -r) build-essential valgrind libboost-all-dev libsasl2-dev lcov
 
-    - name: upload-package
-      uses: actions/upload-artifact@v3
-      with:
-        name: AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_amd64
-        path: cmake-build64/AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_amd64.deb
+      - name: configure-and-build-driver
+        run: |
+          ./build_linux_release64_deb.sh
 
-    - name: register-odbc-driver
-      run: |
-        chmod +r -R ${{env.ODBC_LIB_PATH}}
-        chmod +x scripts/register_driver_unix.sh
-        sudo bash scripts/register_driver_unix.sh
+      - name: update-environment-with-ODBC_DRIVER_VERSION
+        run: |
+          read -r ODBC_DRIVER_VERSION < ./src/ODBC_DRIVER_VERSION.txt
+          echo "ODBC_DRIVER_VERSION=$ODBC_DRIVER_VERSION" >> $GITHUB_ENV
 
-    - name: configure-aws-credentials-for-tests
-      if: success()
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-west-2
+      - name: upload-package
+        uses: actions/upload-artifact@v3
+        with:
+          name: AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_amd64
+          path: cmake-build64/AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_RELEASE_amd64.deb
 
-    # run unit tests
-    - name: run-unit-tests
-      id: rununittests
-      run: |
-        mkdir -p "${{env.TRINO_LOG_PATH}}"
-        ./build/odbc/bin/trino-odbc-unit-tests --catch_system_errors=false
+      - name: register-odbc-driver
+        run: |
+          chmod +r -R ${{env.ODBC_LIB_PATH}}
+          chmod +x scripts/register_driver_unix.sh
+          sudo bash scripts/register_driver_unix.sh
 
-    - name: upload-unit-test-report
-      if: always()
-      uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
-      with:
-        check_name: "Ubuntu 20.04 Build Unit Test Results Check"
-        comment_title: "Ubuntu 20.04 Build Unit Test Results"
-        files: ./odbc_unit_test_result.xml
+      - name: configure-aws-credentials-for-tests
+        if: success()
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
 
-    - name: upload-odbc-unit-test-file
-      if: always() && (steps.rununittests.outcome == 'failure')
-      uses: actions/upload-artifact@v2
-      with:
-        name: odbc-unit-test-results
-        path: |
-          ./odbc_unit_test_result.xml
-          ./build/odbc/logs/trino_odbc_*.log 
-          ./aws_sdk_*.log
+      # run unit tests
+      - name: run-unit-tests
+        id: rununittests
+        run: |
+          mkdir -p "${{env.TRINO_LOG_PATH}}"
+          ./build/odbc/bin/trino-odbc-unit-tests --catch_system_errors=false
 
-    # run odbc tests
-    - name: run-odbc-tests
-      id: runodbctests
-      run: |
-        ./build/odbc/bin/trino-odbc-integration-tests --catch_system_errors=false
+      - name: upload-unit-test-report
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
+        with:
+          check_name: "Ubuntu 20.04 Build Unit Test Results Check"
+          comment_title: "Ubuntu 20.04 Build Unit Test Results"
+          files: ./odbc_unit_test_result.xml
 
-    - name: upload-odbc-test-report
-      if: always()
-      uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
-      with:
-        check_name: "Ubuntu 20.04 Build Integration Test Results Check"
-        comment_title: "Ubuntu 20.04 Build Integration Test Results"
-        files: ./odbc_test_result.xml
+      - name: upload-odbc-unit-test-file
+        if: always() && (steps.rununittests.outcome == 'failure')
+        uses: actions/upload-artifact@v2
+        with:
+          name: odbc-unit-test-results
+          path: |
+            ./odbc_unit_test_result.xml
+            ./build/odbc/logs/trino_odbc_*.log 
+            ./aws_sdk_*.log
 
-    - name: upload-odbc-test-file
-      if: always() && (steps.runodbctests.outcome == 'failure')
-      uses: actions/upload-artifact@v2
-      with:
-        name: odbc-test-results
-        path: |
-          ./odbc_test_result.xml
-          ./build/odbc/logs/trino_odbc_*.log 
-          ./aws_sdk_*.log
+      # run odbc tests
+      - name: run-odbc-tests
+        id: runodbctests
+        run: |
+          ./build/odbc/bin/trino-odbc-integration-tests --catch_system_errors=false
+
+      - name: upload-odbc-test-report
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
+        with:
+          check_name: "Ubuntu 20.04 Build Integration Test Results Check"
+          comment_title: "Ubuntu 20.04 Build Integration Test Results"
+          files: ./odbc_test_result.xml
+
+      - name: upload-odbc-test-file
+        if: always() && (steps.runodbctests.outcome == 'failure')
+        uses: actions/upload-artifact@v2
+        with:
+          name: odbc-test-results
+          path: |
+            ./odbc_test_result.xml
+            ./build/odbc/logs/trino_odbc_*.log 
+            ./aws_sdk_*.log
 
   build-linux64-debug:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Get gcovr
-      run: | 
-        pip install gcovr
+      - name: Get gcovr
+        run: |
+          pip install gcovr
 
-    - name: Get latest version of CMake
-      uses: lukka/get-cmake@latest
+      - name: Get latest version of CMake
+        uses: lukka/get-cmake@latest
 
-    - name: run-cppcheck
-      run: |
-        sudo apt install cppcheck
-        sh run_cppcheck.sh
-  
-    - name: upload-cppcheck-results
-      if: failure()
-      uses: actions/upload-artifact@v2
-      with:
-        name: cppcheck-results
-        path: cppcheck-results.log
+      - name: run-cppcheck
+        run: |
+          sudo apt install cppcheck
+          sh run_cppcheck.sh
 
-    - name: get-dependencies
-      if: success()
-      run: |
-        sudo apt update
-        sudo apt install libcurl4-openssl-dev libssl-dev uuid-dev zlib1g-dev libpulse-dev linux-headers-$(uname -r) gcc gcc-multilib  g++ g++-multilib linux-headers-$(uname -r) build-essential valgrind libboost-all-dev libsasl2-dev lcov
+      - name: upload-cppcheck-results
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cppcheck-results
+          path: cppcheck-results.log
 
-    - name: configure-and-build-driver
-      run: |
-        ./build_linux_debug64_deb.sh
+      - name: get-dependencies
+        if: success()
+        run: |
+          sudo apt update
+          sudo apt install libcurl4-openssl-dev libssl-dev uuid-dev zlib1g-dev libpulse-dev linux-headers-$(uname -r) gcc gcc-multilib  g++ g++-multilib linux-headers-$(uname -r) build-essential valgrind libboost-all-dev libsasl2-dev lcov
 
-    - name: update-environment-with-ODBC_DRIVER_VERSION
-      run: |
-        read -r ODBC_DRIVER_VERSION < ./src/ODBC_DRIVER_VERSION.txt
-        echo "ODBC_DRIVER_VERSION=$ODBC_DRIVER_VERSION" >> $GITHUB_ENV
+      - name: configure-and-build-driver
+        run: |
+          ./build_linux_debug64_deb.sh
 
-    - name: upload-package
-      uses: actions/upload-artifact@v3
-      with:
-        name: AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_amd64
-        path: cmake-build64/AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_amd64.deb
+      - name: update-environment-with-ODBC_DRIVER_VERSION
+        run: |
+          read -r ODBC_DRIVER_VERSION < ./src/ODBC_DRIVER_VERSION.txt
+          echo "ODBC_DRIVER_VERSION=$ODBC_DRIVER_VERSION" >> $GITHUB_ENV
 
-    - name: register-odbc-driver
-      run: |
-        chmod +r -R ${{env.ODBC_LIB_PATH}}
-        chmod +x scripts/register_driver_unix.sh
-        sudo bash scripts/register_driver_unix.sh
+      - name: upload-package
+        uses: actions/upload-artifact@v3
+        with:
+          name: AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_amd64
+          path: cmake-build64/AmazonTrinoODBC_${{env.ODBC_DRIVER_VERSION}}_DEBUG_amd64.deb
 
-    - name: configure-aws-credentials-for-tests
-      if: success()
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-west-2
+      - name: register-odbc-driver
+        run: |
+          chmod +r -R ${{env.ODBC_LIB_PATH}}
+          chmod +x scripts/register_driver_unix.sh
+          sudo bash scripts/register_driver_unix.sh
 
-    # run unit tests
-    - name: run-unit-tests
-      id: rununittests
-      run: |
-        mkdir -p "${{env.TRINO_LOG_PATH}}"
-        ./build/odbc/bin/trino-odbc-unit-tests --catch_system_errors=false
-  
-    - name: upload-test-report
-      if: always()
-      uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
-      with:
-        check_name: "Ubuntu 20.04 Debug Build Unit Test Results Check"
-        comment_title: "Ubuntu 20.04 Debug Build Unit Test Results"
-        files: ./odbc_unit_test_result.xml
+      - name: configure-aws-credentials-for-tests
+        if: success()
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
 
-    - name: upload-unit-test-file
-      if: always() && (steps.rununittests.outcome == 'failure')
-      uses: actions/upload-artifact@v3
-      with:
-        name: odbc-unit-test-results-linux-debug
-        path: |
-          ./odbc_unit_test_result.xml
-          ./build/odbc/logs/trino_odbc_*.log 
-          ./aws_sdk_*.log
+      # run unit tests
+      - name: run-unit-tests
+        id: rununittests
+        run: |
+          mkdir -p "${{env.TRINO_LOG_PATH}}"
+          ./build/odbc/bin/trino-odbc-unit-tests --catch_system_errors=false
 
-    # run odbc tests
-    - name: run-odbc-tests
-      id: runodbctests
-      run: |
-        ./build/odbc/bin/trino-odbc-integration-tests --catch_system_errors=false
-        gcovr --exclude-directories=cmake-build64/tests/integration-test/CMakeFiles/trino-odbc-integration-tests.dir$ --exclude-directories=cmake-build64/tests/unit-test/CMakeFiles/timestrino-unit-tests.dir$ --cobertura --output coverage.cobertura.xml
+      - name: upload-test-report
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
+        with:
+          check_name: "Ubuntu 20.04 Debug Build Unit Test Results Check"
+          comment_title: "Ubuntu 20.04 Debug Build Unit Test Results"
+          files: ./odbc_unit_test_result.xml
 
-    - name: Code Coverage Summary Report
-      uses: irongut/CodeCoverageSummary@v1.2.0
-      with:
-        filename: coverage.cobertura.xml
-        badge: true
-        format: markdown
-        indicators: true
-        output: both
+      - name: upload-unit-test-file
+        if: always() && (steps.rununittests.outcome == 'failure')
+        uses: actions/upload-artifact@v3
+        with:
+          name: odbc-unit-test-results-linux-debug
+          path: |
+            ./odbc_unit_test_result.xml
+            ./build/odbc/logs/trino_odbc_*.log 
+            ./aws_sdk_*.log
 
-    - name: Add Header for Code Coverage Summary Report
-      run: |
-        echo "## Ubuntu 20.04 Debug Build Test Results Check" > coverage-cobertura.md
-        cat code-coverage-results.md >> coverage-cobertura.md
-    
-    - name: Add Coverage PR Comment
-      uses: marocchino/sticky-pull-request-comment@v2
-      if: github.event_name == 'pull_request'
-      with:
-        header: linux
-        recreate: true
-        path: coverage-cobertura.md
-  
-    - name: upload-odbc-test-report
-      if: always()
-      uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
-      with:
-        check_name: "Ubuntu 20.04 Debug Build Integration Test Results Check"
-        comment_title: "Ubuntu 20.04 Debug Build Integration Test Results"
-        files: ./odbc_test_result.xml
+      # run odbc tests
+      - name: run-odbc-tests
+        id: runodbctests
+        run: |
+          ./build/odbc/bin/trino-odbc-integration-tests --catch_system_errors=false
+          gcovr --exclude-directories=cmake-build64/tests/integration-test/CMakeFiles/trino-odbc-integration-tests.dir$ --exclude-directories=cmake-build64/tests/unit-test/CMakeFiles/timestrino-unit-tests.dir$ --cobertura --output coverage.cobertura.xml
 
-    - name: upload-odbc-test-file
-      if: always() && (steps.runodbctests.outcome == 'failure')
-      uses: actions/upload-artifact@v3
-      with:
-        name: odbc-test-results-linux-debug
-        path: |
-          ./odbc_test_result.xml
-          ./build/odbc/logs/trino_odbc_*.log 
-          ./aws_sdk_*.log   
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.2.0
+        with:
+          filename: coverage.cobertura.xml
+          badge: true
+          format: markdown
+          indicators: true
+          output: both
 
-    - name: upload-coverage
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: code-coverage-Linux
-        path: cmake-build64/ccov/all-merged
+      - name: Add Header for Code Coverage Summary Report
+        run: |
+          echo "## Ubuntu 20.04 Debug Build Test Results Check" > coverage-cobertura.md
+          cat code-coverage-results.md >> coverage-cobertura.md
+
+      - name: Add Coverage PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          header: linux
+          recreate: true
+          path: coverage-cobertura.md
+
+      - name: upload-odbc-test-report
+        if: always()
+        uses: EnricoMi/publish-unit-test-result-action/composite@v2.7.0
+        with:
+          check_name: "Ubuntu 20.04 Debug Build Integration Test Results Check"
+          comment_title: "Ubuntu 20.04 Debug Build Integration Test Results"
+          files: ./odbc_test_result.xml
+
+      - name: upload-odbc-test-file
+        if: always() && (steps.runodbctests.outcome == 'failure')
+        uses: actions/upload-artifact@v3
+        with:
+          name: odbc-test-results-linux-debug
+          path: |
+            ./odbc_test_result.xml
+            ./build/odbc/logs/trino_odbc_*.log 
+            ./aws_sdk_*.log
+
+      - name: upload-coverage
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-Linux
+          path: cmake-build64/ccov/all-merged
