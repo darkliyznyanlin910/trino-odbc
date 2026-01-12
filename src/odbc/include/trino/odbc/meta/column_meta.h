@@ -34,11 +34,11 @@
 
 /*#*/
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/trino-query/model/ColumnInfo.h>
-#include <aws/trino-query/model/ScalarType.h>
+#include <aws/timestream-query/model/ColumnInfo.h>
+#include <aws/timestream-query/model/ScalarType.h>
 
-using client::TrinoQuery::Model::ColumnInfo; /*#*/
-using client::TrinoQuery::Model::ScalarType; /*#*/
+using client::TimestreamQuery::Model::ColumnInfo; /*#*/
+using client::TimestreamQuery::Model::ScalarType; /*#*/
 
 namespace trino {
 namespace odbc {
@@ -236,7 +236,7 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
    * Get Aws ColumnInfo.
    * @return Aws ColumnInfo.
    */
-  const boost::optional< client::TrinoQuery::Model::ColumnInfo >& /*#*/
+  const boost::optional< client::TimestreamQuery::Model::ColumnInfo >& /*#*/
   GetColumnInfo() const {
     return columnInfo;
   }
@@ -381,12 +381,12 @@ class IGNITE_IMPORT_EXPORT ColumnMeta {
    * Get the scalar type based on string data type.
    *
    * @param dataType data type in string.
-   * @return TrinoQuery ScalarType
+   * @return TimestreamQuery ScalarType
    */
   ScalarType GetScalarDataType(const std::string& dataType);
 
   /** columnInfo. */
-  boost::optional< client::TrinoQuery::Model::ColumnInfo > columnInfo; /*#*/
+  boost::optional< client::TimestreamQuery::Model::ColumnInfo > columnInfo; /*#*/
 
   /** Catalog name. */
   boost::optional< std::string > catalogName;

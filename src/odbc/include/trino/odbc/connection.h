@@ -37,7 +37,7 @@
 /*#*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
-#include <aws/trino-query/TrinoQueryClient.h>
+#include <aws/timestream-query/TimestreamQueryClient.h>
 #include "aws/sts/STSClient.h"
 
 namespace trino {
@@ -145,7 +145,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
    *
    * @return Shared Pointer to Trino query client.
    */
-  std::shared_ptr< client::TrinoQuery::TrinoQueryClient > /*#*/
+  std::shared_ptr< client::TimestreamQuery::TimestreamQueryClient > /*#*/
   GetQueryClient() const;
 
   /**
@@ -318,14 +318,14 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   Connection();
 
   /**
-   * Create TrinoQueryClient object.
+   * Create TimestreamQueryClient object.
    *
    * @param credentials trino credentials.
    * @param clientCfg trino client configuration.
-   * @return a shared_ptr to created TrinoQueryClient object.
+   * @return a shared_ptr to created TimestreamQueryClient object.
    */
-  virtual std::shared_ptr< client::TrinoQuery::TrinoQueryClient > /*#*/
-  CreateTRINOQueryClient(const trino::auth::BasicAuthentication& credentials,
+  virtual std::shared_ptr< client::TimestreamQuery::TimestreamQueryClient > /*#*/
+  CreateTimestreamQueryClient(const trino::auth::BasicAuthentication& credentials,
                       const Aws::Client::ClientConfiguration& clientCfg); /*@*/ /*$*/
 
   /**
@@ -603,7 +603,7 @@ class IGNITE_IMPORT_EXPORT Connection : public diagnostic::DiagnosableAdapter {
   config::ConnectionInfo info_;
 
   /** Trino query client. */
-  std::shared_ptr< client::TrinoQuery::TrinoQueryClient > queryClient_; /*#*/
+  std::shared_ptr< client::TimestreamQuery::TimestreamQueryClient > queryClient_; /*#*/
 
   /** mutex for cursor names update */
   std::mutex cursorNameMutex_;

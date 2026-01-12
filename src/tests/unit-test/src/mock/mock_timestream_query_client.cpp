@@ -17,10 +17,10 @@
 /*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/utils/Outcome.h>
-#include <aws/trino-query/model/QueryResult.h>
-#include <aws/trino-query/model/Row.h>
-#include <aws/trino-query/model/Datum.h>
-#include <aws/trino-query/TrinoQueryErrors.h>
+#include <aws/timestream-query/model/QueryResult.h>
+#include <aws/timestream-query/model/Row.h>
+#include <aws/timestream-query/model/Datum.h>
+#include <aws/timestream-query/TimestreamQueryErrors.h>
 
 #include <mock/mock_trino_query_client.h>
 #include <mock/mock_trino_service.h>
@@ -28,16 +28,16 @@
 namespace trino {
 namespace odbc {
 // All the working logic is done by the singleton MockTrinoService object.
-Aws::TrinoQuery::Model::QueryOutcome MockTrinoQueryClient::Query(
-    const Aws::TrinoQuery::Model::QueryRequest &request) const {
+Aws::TimestreamQuery::Model::QueryOutcome MockTimestreamQueryClient::Query(
+    const Aws::TimestreamQuery::Model::QueryRequest &request) const {
   // authenticate first
   if (!MockTrinoService::GetInstance()->Authenticate(
           credentials_.GetAWSAccessKeyId(), credentials_.GetAWSSecretKey())) {
-    Aws::TrinoQuery::TrinoQueryError error(
+    Aws::TimestreamQuery::TimestreamQueryError error(
         Aws::Client::AWSError< Aws::Client::CoreErrors >(
             Aws::Client::CoreErrors::INVALID_ACCESS_KEY_ID, false));
 
-    return Aws::TrinoQuery::Model::QueryOutcome(error);
+    return Aws::TimestreamQuery::Model::QueryOutcome(error);
   }
 
   return MockTrinoService::GetInstance()->HandleQueryReq(request);

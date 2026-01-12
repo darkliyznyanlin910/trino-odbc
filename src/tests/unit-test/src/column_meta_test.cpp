@@ -210,42 +210,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeLiteralPrefix) {
 
   std::vector< std::pair< int16_t, std::string > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      std::string("'")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      std::string("")),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           std::string("")),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
-          std::string("")),
-      std::make_pair(
-          static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           std::string("")),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+          std::string("")),
+      std::make_pair(
+          static_cast< int16_t >(
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      std::string(""))};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -271,42 +271,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeLiteralSuffix) {
 
   std::vector< std::pair< int16_t, std::string > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      std::string("'")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      std::string("")),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           std::string("")),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
-          std::string("")),
-      std::make_pair(
-          static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           std::string("")),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+          std::string("")),
+      std::make_pair(
+          static_cast< int16_t >(
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      std::string("")),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      std::string(""))};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -334,42 +334,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeLocalTypeName) {
 
   std::vector< std::pair< int16_t, std::string > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      trino::odbc::type_traits::SqlTypeName::VARCHAR),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      trino::odbc::type_traits::SqlTypeName::BIT),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      trino::odbc::type_traits::SqlTypeName::BIGINT),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      trino::odbc::type_traits::SqlTypeName::DOUBLE),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      trino::odbc::type_traits::SqlTypeName::TIMESTAMP),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           trino::odbc::type_traits::SqlTypeName::DATE),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           trino::odbc::type_traits::SqlTypeName::TIME),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
           trino::odbc::type_traits::SqlTypeName::INTERVAL_DAY_TO_SECOND),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           trino::odbc::type_traits::SqlTypeName::INTERVAL_YEAR_TO_MONTH),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      trino::odbc::type_traits::SqlTypeName::INTEGER),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      trino::odbc::type_traits::SqlTypeName::NOT_SET),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      trino::odbc::type_traits::SqlTypeName::UNKNOWN)};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -395,42 +395,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeCaseSensitive) {
 
   std::vector< std::pair< int16_t, SQLLEN > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      true),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      false),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      false),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      false),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      false),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           false),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
-          false),
-      std::make_pair(
-          static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           false),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+          false),
+      std::make_pair(
+          static_cast< int16_t >(
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           false),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      false),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      false),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      false)};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -456,42 +456,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeConciseTypeAndType) {
 
   std::vector< std::pair< int16_t, SQLLEN > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      SQL_VARCHAR),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      SQL_BIT),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      SQL_BIGINT),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      SQL_DOUBLE),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      SQL_TYPE_TIMESTAMP),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           SQL_TYPE_DATE),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           SQL_TYPE_TIME),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
           SQL_INTERVAL_DAY_TO_SECOND),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           SQL_INTERVAL_YEAR_TO_MONTH),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      SQL_INTEGER),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      SQL_VARCHAR),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      SQL_VARCHAR)};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -522,42 +522,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeDisplaySize) {
 
   std::vector< std::pair< int16_t, SQLLEN > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      TRINO_SQL_MAX_LENGTH),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      1),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      20),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      24),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      20),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           10),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           8),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
           25),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           12),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      11),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      TRINO_SQL_MAX_LENGTH),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      TRINO_SQL_MAX_LENGTH)};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -583,42 +583,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeLength) {
 
   std::vector< std::pair< int16_t, SQLLEN > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      TRINO_SQL_MAX_LENGTH),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      1),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      20),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      24),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      20),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           10),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           8),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
           25),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           12),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      11),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      TRINO_SQL_MAX_LENGTH),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      TRINO_SQL_MAX_LENGTH)};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -644,42 +644,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeOctetLength) {
 
   std::vector< std::pair< int16_t, SQLLEN > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      TRINO_SQL_MAX_LENGTH),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      1),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      8),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      8),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      16),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           6),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           6),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
           34),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           34),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      4),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      TRINO_SQL_MAX_LENGTH),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      TRINO_SQL_MAX_LENGTH)};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -738,42 +738,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeNumPrecRadix) {
 
   std::vector< std::pair< int16_t, SQLLEN > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      0),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      10),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      10),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      2),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      0),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           0),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
-          0),
-      std::make_pair(
-          static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           0),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+          0),
+      std::make_pair(
+          static_cast< int16_t >(
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           0),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      10),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      0),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      0)};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -799,42 +799,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributePrecision) {
 
   std::vector< std::pair< int16_t, SQLLEN > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      TRINO_SQL_MAX_LENGTH),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      1),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      19),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      15),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      19),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           10),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           8),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
           25),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           12),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      10),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      TRINO_SQL_MAX_LENGTH),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      TRINO_SQL_MAX_LENGTH)};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -860,42 +860,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeScale) {
 
   std::vector< std::pair< int16_t, SQLLEN > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      -1),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      -1),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      0),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      15),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      -1),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           -1),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
-          -1),
-      std::make_pair(
-          static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           -1),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+          -1),
+      std::make_pair(
+          static_cast< int16_t >(
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           -1),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      0),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      -1),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      -1)};
 
   for (int i = 0; i < tests.size(); i++) {
@@ -946,42 +946,42 @@ BOOST_AUTO_TEST_CASE(TestGetAttributeUnsigned) {
 
   std::vector< std::pair< int16_t, SQLLEN > > tests = {
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::VARCHAR),
+                         Aws::TimestreamQuery::Model::ScalarType::VARCHAR),
                      true),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BOOLEAN),
+                         Aws::TimestreamQuery::Model::ScalarType::BOOLEAN),
                      false),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::BIGINT),
+                         Aws::TimestreamQuery::Model::ScalarType::BIGINT),
                      false),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::DOUBLE),
+                         Aws::TimestreamQuery::Model::ScalarType::DOUBLE),
                      false),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::TIMESTAMP),
+                         Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP),
                      true),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::DATE),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::DATE),
           true),
       std::make_pair(
-          static_cast< int16_t >(Aws::TrinoQuery::Model::ScalarType::TIME),
+          static_cast< int16_t >(Aws::TimestreamQuery::Model::ScalarType::TIME),
           true),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND),
           true),
       std::make_pair(
           static_cast< int16_t >(
-              Aws::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
+              Aws::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH),
           true),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::INTEGER),
+                         Aws::TimestreamQuery::Model::ScalarType::INTEGER),
                      false),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::NOT_SET),
+                         Aws::TimestreamQuery::Model::ScalarType::NOT_SET),
                      true),
       std::make_pair(static_cast< int16_t >(
-                         Aws::TrinoQuery::Model::ScalarType::UNKNOWN),
+                         Aws::TimestreamQuery::Model::ScalarType::UNKNOWN),
                      true)};
 
   for (int i = 0; i < tests.size(); i++) {

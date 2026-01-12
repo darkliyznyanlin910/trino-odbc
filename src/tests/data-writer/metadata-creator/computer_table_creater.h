@@ -19,9 +19,9 @@
 
 #include "measure_metadata_creater.h"
 /*@*/
-#include <aws/trino-write/model/MeasureValueType.h>
+#include <aws/timestream-write/model/MeasureValueType.h>
 
-using Aws::TrinoWrite::Model::MeasureValueType;
+using Aws::TimestreamWrite::Model::MeasureValueType;
 
 namespace trino {
 namespace odbc {

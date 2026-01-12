@@ -25,10 +25,10 @@
 #include <trino/odbc/app/application_data_buffer.h>
 #include "trino/odbc/meta/column_meta.h"
 /*#*/
-#include <aws/trino-query/model/Row.h>
+#include <aws/timestream-query/model/Row.h>
 
-using client::TrinoQuery::Model::Datum; /*#*/
-using client::TrinoQuery::Model::Row; /*#*/
+using client::TimestreamQuery::Model::Datum; /*#*/
+using client::TimestreamQuery::Model::Row; /*#*/
 using trino::odbc::app::ApplicationDataBuffer;
 using trino::odbc::app::ConversionResult;
 

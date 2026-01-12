@@ -19,13 +19,13 @@
 
 /*@*/
 #include <aws/core/Aws.h>
-#include <aws/trino-write/model/Dimension.h>
-#include <aws/trino-write/model/Record.h>
-#include <aws/trino-write/model/MeasureValue.h>
+#include <aws/timestream-write/model/Dimension.h>
+#include <aws/timestream-write/model/Record.h>
+#include <aws/timestream-write/model/MeasureValue.h>
 
-using Aws::TrinoWrite::Model::Dimension;
-using Aws::TrinoWrite::Model::MeasureValue;
-using Aws::TrinoWrite::Model::Record;
+using Aws::TimestreamWrite::Model::Dimension;
+using Aws::TimestreamWrite::Model::MeasureValue;
+using Aws::TimestreamWrite::Model::Record;
 
 namespace trino {
 namespace odbc {

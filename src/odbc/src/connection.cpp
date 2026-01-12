@@ -41,8 +41,8 @@
 #include <trino/client.h>
 
 /*#*/
-#include <aws/trino-query/model/QueryRequest.h>
-#include <aws/trino-query/model/QueryResult.h>
+#include <aws/timestream-query/model/QueryRequest.h>
+#include <aws/timestream-query/model/QueryResult.h>
 #include <aws/core/utils/logging/LogLevel.h>
 #include <aws/core/auth/AWSCredentialsProvider.h>
 #include <aws/core/client/DefaultRetryStrategy.h>
@@ -167,7 +167,7 @@ void Connection::Deregister() {
   env_->DeregisterConnection(this);
 }
 
-std::shared_ptr< client::TrinoQuery::TrinoQueryClient > /*@*/
+std::shared_ptr< client::TimestreamQuery::TimestreamQueryClient > /*@*/
 Connection::GetQueryClient() const {
   return queryClient_;
 }
@@ -574,11 +574,11 @@ std::shared_ptr< Aws::STS::STSClient > Connection::GetStsClient() { /*@*/
   return std::make_shared< Aws::STS::STSClient >(); /*@*/
 }
 
-std::shared_ptr< client::TrinoQuery::TrinoQueryClient > /*@*/
-Connection::CreateTRINOQueryClient(
+std::shared_ptr< client::TimestreamQuery::TimestreamQueryClient > /*@*/
+Connection::CreateTimestreamQueryClient(
     const trino::auth::BasicAuthentication& credentials,
     const Aws::Client::ClientConfiguration& clientCfg) { /*@*/
-  return std::make_shared< client::TrinoQuery::TrinoQueryClient >(credentials, clientCfg); /*@*/
+  return std::make_shared< client::TimestreamQuery::TimestreamQueryClient >(credentials, clientCfg); /*@*/
 }
 
 Descriptor* Connection::CreateDescriptor() {

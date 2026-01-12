@@ -21,7 +21,7 @@
 #include "trino/odbc/query/table_metadata_query.h"
 
 /*#*/
-#include <aws/trino-query/model/ScalarType.h>
+#include <aws/timestream-query/model/ScalarType.h>
 
 #include <vector>
 
@@ -29,7 +29,7 @@
 #include "trino/odbc/log.h"
 #include "trino/odbc/type_traits.h"
 
-using client::TrinoQuery::Model::ScalarType; /*#*/
+using client::TimestreamQuery::Model::ScalarType; /*#*/
 
 namespace trino {
 namespace odbc {

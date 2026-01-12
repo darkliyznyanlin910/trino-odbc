@@ -32,9 +32,9 @@
 #include <boost/optional.hpp>
 #include <ignite/common/common.h>
 /*#*/
-#include <aws/trino-query/model/ScalarType.h>
+#include <aws/timestream-query/model/ScalarType.h>
 
-using client::TrinoQuery::Model::ScalarType; /*#*/
+using client::TimestreamQuery::Model::ScalarType; /*#*/
 
 namespace trino {
 namespace odbc {

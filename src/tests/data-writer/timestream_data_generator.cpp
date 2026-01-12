@@ -17,8 +17,8 @@
 #include <iostream>
 
 /*@*/
-#include <aws/trino-write/model/Record.h>
-#include <aws/trino-write/model/MeasureValueType.h>
+#include <aws/timestream-write/model/Record.h>
+#include <aws/timestream-write/model/MeasureValueType.h>
 
 #include "trino_writer.h"
 
@@ -114,7 +114,7 @@ int main(int argc, char* argv[]) {
   clientCfg.region = "us-west-2";  // default client region for us
   clientCfg.enableEndpointDiscovery = true;
 
-  trino::odbc::TrinoWriter writer(credentials, clientCfg);
+  trino::odbc::TimestreamWriter writer(credentials, clientCfg);
 
   // initialize random seed
   srand(time(NULL));

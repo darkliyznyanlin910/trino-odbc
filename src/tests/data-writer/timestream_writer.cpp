@@ -17,11 +17,11 @@
 #include "trino_writer.h"
 
 /*@*/
-#include <aws/trino-write/model/Record.h>
-#include <aws/trino-write/model/WriteRecordsRequest.h>
-#include <aws/trino-write/model/MeasureValueType.h>
-#include <aws/trino-write/model/RejectedRecordsException.h>
-#include <aws/trino-write/model/RejectedRecord.h>
+#include <aws/timestream-write/model/Record.h>
+#include <aws/timestream-write/model/WriteRecordsRequest.h>
+#include <aws/timestream-write/model/MeasureValueType.h>
+#include <aws/timestream-write/model/RejectedRecordsException.h>
+#include <aws/timestream-write/model/RejectedRecord.h>
 
 #include "metadata-creator/computer_table_creater.h"
 
@@ -34,11 +34,11 @@
 #endif
 #include <iostream>
 
-using Aws::TrinoWrite::Model::MeasureValueType;
-using Aws::TrinoWrite::Model::Record;
-using Aws::TrinoWrite::Model::RejectedRecord;
-using Aws::TrinoWrite::Model::RejectedRecordsException;
-using Aws::TrinoWrite::Model::WriteRecordsRequest;
+using Aws::TimestreamWrite::Model::MeasureValueType;
+using Aws::TimestreamWrite::Model::Record;
+using Aws::TimestreamWrite::Model::RejectedRecord;
+using Aws::TimestreamWrite::Model::RejectedRecordsException;
+using Aws::TimestreamWrite::Model::WriteRecordsRequest;
 
 // needed to avoid misreplace
 #ifdef GetMessage
@@ -63,7 +63,7 @@ int gettimeofday(struct timeval* tp, struct timezone* tzp) {
 #endif  // _WIN32
 
 std::shared_ptr< MeasureMetadataCreater >
-TrinoWriter::CreateMetadataCreater(Aws::String tableType) {
+TimestreamWriter::CreateMetadataCreater(Aws::String tableType) {
   std::transform(tableType.begin(), tableType.end(), tableType.begin(),
                  toupper);
   if (tableType == "COMPUTER") {
@@ -75,7 +75,7 @@ TrinoWriter::CreateMetadataCreater(Aws::String tableType) {
   }
 }
 
-bool TrinoWriter::WriteSingleValueRecords(const Aws::String& tableType,
+bool TimestreamWriter::WriteSingleValueRecords(const Aws::String& tableType,
                                                const Aws::String& database,
                                                const Aws::String& table,
                                                int loopNum) {
@@ -117,7 +117,7 @@ bool TrinoWriter::WriteSingleValueRecords(const Aws::String& tableType,
     writeRecordsRequest.WithRecords(records);
 
     try {
-      Aws::TrinoWrite::Model::WriteRecordsOutcome outcome =
+      Aws::TimestreamWrite::Model::WriteRecordsOutcome outcome =
           client_->WriteRecords(writeRecordsRequest);
       if (!outcome.IsSuccess()) {
         std::cout << "Error msg is " << outcome.GetError().GetMessage()
@@ -135,7 +135,7 @@ bool TrinoWriter::WriteSingleValueRecords(const Aws::String& tableType,
   return true;
 }
 
-bool TrinoWriter::WriteMultiValueRecords(const Aws::String& tableType,
+bool TimestreamWriter::WriteMultiValueRecords(const Aws::String& tableType,
                                               const Aws::String& database,
                                               const Aws::String& table,
                                               int loopNum) {
@@ -185,7 +185,7 @@ bool TrinoWriter::WriteMultiValueRecords(const Aws::String& tableType,
     writeRecordsRequest.AddRecords(multiMeasure);
 
     try {
-      Aws::TrinoWrite::Model::WriteRecordsOutcome outcome =
+      Aws::TimestreamWrite::Model::WriteRecordsOutcome outcome =
           client_->WriteRecords(writeRecordsRequest);
       if (!outcome.IsSuccess()) {
         std::cout << "Error msg is " << outcome.GetError().GetMessage()

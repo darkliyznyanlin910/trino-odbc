@@ -27,7 +27,7 @@
 #include "trino/odbc/type_traits.h"
 
 /*#*/
-#include <aws/trino-query/model/Type.h>
+#include <aws/timestream-query/model/Type.h>
 
 namespace trino {
 namespace odbc {
@@ -114,31 +114,31 @@ const std::string NULLABLE = "NULLABLE";
 const std::string ORDINAL_POSITION = "ORDINAL_POSITION";
 const std::string IS_AUTOINCREMENT = "IS_AUTOINCREMENT";
 
-client::TrinoQuery::Model::ScalarType ColumnMeta::GetScalarDataType(
+client::TimestreamQuery::Model::ScalarType ColumnMeta::GetScalarDataType(
     const std::string& dataType) { /*@*/
   LOG_DEBUG_MSG("GetScalarDataType is called with dataType " << dataType);
   if (dataType == "varchar") {
-    return client::TrinoQuery::Model::ScalarType::VARCHAR; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::VARCHAR; /*#*/
   } else if (dataType == "bigint") {
-    return client::TrinoQuery::Model::ScalarType::BIGINT; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::BIGINT; /*#*/
   } else if (dataType == "double") {
-    return client::TrinoQuery::Model::ScalarType::DOUBLE; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::DOUBLE; /*#*/
   } else if (dataType == "boolean") {
-    return client::TrinoQuery::Model::ScalarType::BOOLEAN; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::BOOLEAN; /*#*/
   } else if (dataType == "timestamp") {
-    return client::TrinoQuery::Model::ScalarType::TIMESTAMP; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::TIMESTAMP; /*#*/
   } else if (dataType == "date") {
-    return client::TrinoQuery::Model::ScalarType::DATE; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::DATE; /*#*/
   } else if (dataType == "time") {
-    return client::TrinoQuery::Model::ScalarType::TIME; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::TIME; /*#*/
   } else if (dataType == "integer") {
-    return client::TrinoQuery::Model::ScalarType::INTEGER; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::INTEGER; /*#*/
   } else if (dataType == "interval day to second") {
-    return client::TrinoQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::INTERVAL_DAY_TO_SECOND; /*#*/
   } else if (dataType == "interval year to month") {
-    return client::TrinoQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::INTERVAL_YEAR_TO_MONTH; /*#*/
   } else {
-    return client::TrinoQuery::Model::ScalarType::UNKNOWN; /*#*/
+    return client::TimestreamQuery::Model::ScalarType::UNKNOWN; /*#*/
   }
 }
 
@@ -177,7 +177,7 @@ void ColumnMeta::Read(app::ColumnBindingMap& columnBindings, int32_t position) {
 
 void ColumnMeta::ReadMetadata(const ColumnInfo& trinoMetadata) {
   LOG_DEBUG_MSG("ReadMetadata is called");
-  using client::TrinoQuery::Model::Type; /*#*/
+  using client::TimestreamQuery::Model::Type; /*#*/
 
   columnInfo = trinoMetadata;
 
@@ -190,7 +190,7 @@ void ColumnMeta::ReadMetadata(const ColumnInfo& trinoMetadata) {
     dataType = static_cast< int16_t >(columnType.GetScalarType());
   } else {
     dataType = static_cast< int16_t >(
-        client::TrinoQuery::Model::ScalarType::VARCHAR); /*#*/
+        client::TimestreamQuery::Model::ScalarType::VARCHAR); /*#*/
   }
 }
 

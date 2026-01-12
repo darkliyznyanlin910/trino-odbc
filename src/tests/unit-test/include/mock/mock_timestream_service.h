@@ -20,8 +20,8 @@
 /*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
-#include <aws/trino-query/TrinoQueryClient.h>
-#include <aws/trino-query/model/QueryRequest.h>
+#include <aws/timestream-query/TimestreamQueryClient.h>
+#include <aws/timestream-query/model/QueryRequest.h>
 
 namespace trino {
 namespace odbc {
@@ -89,8 +89,8 @@ class MockTrinoService {
    *
    * @param request Query request
    */
-  Aws::TrinoQuery::Model::QueryOutcome HandleQueryReq(
-      const Aws::TrinoQuery::Model::QueryRequest& request);
+  Aws::TimestreamQuery::Model::QueryOutcome HandleQueryReq(
+      const Aws::TimestreamQuery::Model::QueryRequest& request);
 
  private:
   /**
@@ -100,7 +100,7 @@ class MockTrinoService {
   }
 
   void SetupResultForMockTable(
-      Aws::TrinoQuery::Model::QueryResult& result);
+      Aws::TimestreamQuery::Model::QueryResult& result);
 
   static std::mutex mutex_;
   static MockTrinoService* instance_;

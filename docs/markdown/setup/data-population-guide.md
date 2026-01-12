@@ -35,7 +35,7 @@ The design principle is to write large amount of data to Trino in a short time. 
 
 ```mermaid
 graph TD
-    A[Main] --> |create| B(TrinoWriter)
+    A[Main] --> |create| B(TimestreamWriter)
     B --> |create| C(MeasureMetadataCreater)
     C --> |Create| D(Dimensions)
     C --> |Create if multi-measure| E(MeasureName)
@@ -51,13 +51,13 @@ graph TD
     J --> K(WriteToTrino)
     K --> |Loop|H(GetCurrentTime)
 ```
-The main function collects and verify the input parameters. After all parameters are verified it creates a TrinoWriter. When writing to Trino, the writer creates a MeasureMetadataCreater firstly. Then the creater creates Dimensions, MeasureName and MeasureValues/Records. After these basic metadata info is prepared, the writer starts to get current timestamp and assign the record/measure value. The writer calls AWS SDK API to write data to Trino. This is the process of writing a single record to Trino. Since there are a lot of records to be written, the writer restarts and gets the next record timestamp from GetCurrentTime. The loop continues until the specified number of records are written to Trino.
+The main function collects and verify the input parameters. After all parameters are verified it creates a TimestreamWriter. When writing to Trino, the writer creates a MeasureMetadataCreater firstly. Then the creater creates Dimensions, MeasureName and MeasureValues/Records. After these basic metadata info is prepared, the writer starts to get current timestamp and assign the record/measure value. The writer calls AWS SDK API to write data to Trino. This is the process of writing a single record to Trino. Since there are a lot of records to be written, the writer restarts and gets the next record timestamp from GetCurrentTime. The loop continues until the specified number of records are written to Trino.
 
 ## How to add a new table type
 New table types could be added easily. 
 1. Create a subclass of `MeasureMetadataCreater`.
 2. Implement the virtual functions based on need. If a single measure row is needed, you need to implement `CreateDimensions`, `CreateRecords` and `GetRecordValueAssignFunPtr`. If a multi measure row is needed, you need to implement `CreateDimensions`, `CreateMeasureValues`, `GetMetricName` and `GetMeasureValueAssignFunPtr`.
-3. In `TrinoWriter::CreateMetadataCreater()`, add a object creation for the new subclass based on input table type string.
+3. In `TimestreamWriter::CreateMetadataCreater()`, add a object creation for the new subclass based on input table type string.
 4. Update trino_data_generator.cpp and this document to add a new valid table type.
 
 ## Table structures

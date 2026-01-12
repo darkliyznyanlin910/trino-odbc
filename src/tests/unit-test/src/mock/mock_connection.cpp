@@ -44,13 +44,13 @@ SqlResult::Type MockConnection::InternalCreateStatement(
   return SqlResult::AI_SUCCESS;
 }
 
-std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
+std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient >
 MockConnection::CreateTSQueryClient(
     const Aws::Auth::AWSCredentials& credentials,
     const Aws::Client::ClientConfiguration& clientCfg) {
   return std::static_pointer_cast<
-      Aws::TrinoQuery::TrinoQueryClient >(
-      std::make_shared< trino::odbc::MockTrinoQueryClient >(
+      Aws::TimestreamQuery::TimestreamQueryClient >(
+      std::make_shared< trino::odbc::MockTimestreamQueryClient >(
           credentials, clientCfg));
 }
 

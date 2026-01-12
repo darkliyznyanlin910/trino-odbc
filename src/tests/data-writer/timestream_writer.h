@@ -20,22 +20,22 @@
 /*@*/
 #include <aws/core/Aws.h>
 #include <aws/core/auth/AWSCredentials.h>
-#include <aws/trino-write/TrinoWriteClient.h>
+#include <aws/timestream-write/TimestreamWriteClient.h>
 
 #include "metadata-creator/measure_metadata_creater.h"
 
 namespace trino {
 namespace odbc {
 
-class TrinoWriter {
+class TimestreamWriter {
  public:
-  TrinoWriter(Aws::Auth::AWSCredentials& credentials,
+  TimestreamWriter(Aws::Auth::AWSCredentials& credentials,
                    Aws::Client::ClientConfiguration& clientCfg) {
-    client_ = std::make_shared< Aws::TrinoWrite::TrinoWriteClient >(
+    client_ = std::make_shared< Aws::TimestreamWrite::TimestreamWriteClient >(
         credentials, clientCfg);
   }
 
-  ~TrinoWriter() = default;
+  ~TimestreamWriter() = default;
 
   bool WriteSingleValueRecords(const Aws::String& tableMeta,
                                const Aws::String& database,
@@ -49,7 +49,7 @@ class TrinoWriter {
   std::shared_ptr< MeasureMetadataCreater > CreateMetadataCreater(
       Aws::String tableType);
 
-  std::shared_ptr< Aws::TrinoWrite::TrinoWriteClient > client_;
+  std::shared_ptr< Aws::TimestreamWrite::TimestreamWriteClient > client_;
 };
 }  // namespace odbc
 }  // namespace trino

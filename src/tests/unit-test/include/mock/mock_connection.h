@@ -50,14 +50,14 @@ class MockConnection : public Connection {
   virtual SqlResult::Type InternalCreateStatement(MockStatement*& statement);
 
   /**
-   * Create MockTrinoQueryClient object.
+   * Create MockTimestreamQueryClient object.
    *
    * @param credentials Aws IAM credentials.
    * @param clientCfg Aws client configuration.
    * @param cfg connection configuration.
-   * @return a shared_ptr to created MockTrinoQueryClient object.
+   * @return a shared_ptr to created MockTimestreamQueryClient object.
    */
-  virtual std::shared_ptr< Aws::TrinoQuery::TrinoQueryClient >
+  virtual std::shared_ptr< Aws::TimestreamQuery::TimestreamQueryClient >
   CreateTSQueryClient(const Aws::Auth::AWSCredentials& credentials,
                       const Aws::Client::ClientConfiguration& clientCfg);
 

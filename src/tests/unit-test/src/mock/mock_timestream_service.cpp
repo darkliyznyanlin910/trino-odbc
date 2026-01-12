@@ -16,12 +16,12 @@
 
 /*@*/
 #include <aws/core/Aws.h>
-#include <aws/trino-query/model/QueryResult.h>
-#include <aws/trino-query/TrinoQueryErrors.h>
+#include <aws/timestream-query/model/QueryResult.h>
+#include <aws/timestream-query/TimestreamQueryErrors.h>
 #include <aws/core/utils/Outcome.h>
-#include <aws/trino-query/model/Row.h>
-#include <aws/trino-query/model/Datum.h>
-#include <aws/trino-query/model/ColumnInfo.h>
+#include <aws/timestream-query/model/Row.h>
+#include <aws/timestream-query/model/Datum.h>
+#include <aws/timestream-query/model/ColumnInfo.h>
 
 #include <mock/mock_trino_service.h>
 
@@ -76,39 +76,39 @@ bool MockTrinoService::Authenticate(const Aws::String& keyId,
 
 // Setup QueryResult for mockTables
 void MockTrinoService::SetupResultForMockTable(
-    Aws::TrinoQuery::Model::QueryResult& result) {
-  Aws::TrinoQuery::Model::ColumnInfo firstColumn;
+    Aws::TimestreamQuery::Model::QueryResult& result) {
+  Aws::TimestreamQuery::Model::ColumnInfo firstColumn;
   firstColumn.SetName("measure");
-  Aws::TrinoQuery::Model::Type stringType;
-  stringType.SetScalarType(Aws::TrinoQuery::Model::ScalarType::VARCHAR);
+  Aws::TimestreamQuery::Model::Type stringType;
+  stringType.SetScalarType(Aws::TimestreamQuery::Model::ScalarType::VARCHAR);
   firstColumn.SetType(stringType);
 
-  Aws::TrinoQuery::Model::ColumnInfo secondColumn;
+  Aws::TimestreamQuery::Model::ColumnInfo secondColumn;
   secondColumn.SetName("time");
-  Aws::TrinoQuery::Model::Type timeType;
-  timeType.SetScalarType(Aws::TrinoQuery::Model::ScalarType::TIMESTAMP);
+  Aws::TimestreamQuery::Model::Type timeType;
+  timeType.SetScalarType(Aws::TimestreamQuery::Model::ScalarType::TIMESTAMP);
   secondColumn.SetType(timeType);
   result.AddColumnInfo(firstColumn);
   result.AddColumnInfo(secondColumn);
 
-  Aws::TrinoQuery::Model::Datum measure;
+  Aws::TimestreamQuery::Model::Datum measure;
   measure.SetScalarValue("cpu_usage");
-  Aws::TrinoQuery::Model::Datum time1;
+  Aws::TimestreamQuery::Model::Datum time1;
   time1.SetScalarValue("2022-11-09 23:52:51.554000000");
-  Aws::TrinoQuery::Model::Datum time2;
+  Aws::TimestreamQuery::Model::Datum time2;
   time2.SetScalarValue("2022-11-10 23:53:51.554000000");
-  Aws::TrinoQuery::Model::Datum time3;
+  Aws::TimestreamQuery::Model::Datum time3;
   time3.SetScalarValue("2022-11-11 23:54:51.554000000");
 
-  Aws::TrinoQuery::Model::Row row1;
+  Aws::TimestreamQuery::Model::Row row1;
   row1.AddData(measure);
   row1.AddData(time1);
 
-  Aws::TrinoQuery::Model::Row row2;
+  Aws::TimestreamQuery::Model::Row row2;
   row2.AddData(measure);
   row2.AddData(time2);
 
-  Aws::TrinoQuery::Model::Row row3;
+  Aws::TimestreamQuery::Model::Row row3;
   row3.AddData(measure);
   row3.AddData(time3);
 
@@ -120,54 +120,54 @@ void MockTrinoService::SetupResultForMockTable(
 // This function simulates AWS Trino service. It provides
 // simple result without the need of parsing the query. Update
 // this function if new query needs to be handled.
-Aws::TrinoQuery::Model::QueryOutcome MockTrinoService::HandleQueryReq(
-    const Aws::TrinoQuery::Model::QueryRequest& request) {
+Aws::TimestreamQuery::Model::QueryOutcome MockTrinoService::HandleQueryReq(
+    const Aws::TimestreamQuery::Model::QueryRequest& request) {
   if (request.GetQueryString() == "SELECT 1") {
     // set up QueryResult
-    Aws::TrinoQuery::Model::QueryResult result;
-    Aws::TrinoQuery::Model::Datum datum;
+    Aws::TimestreamQuery::Model::QueryResult result;
+    Aws::TimestreamQuery::Model::Datum datum;
     datum.SetScalarValue("1");
 
-    Aws::TrinoQuery::Model::Row row;
+    Aws::TimestreamQuery::Model::Row row;
     row.AddData(datum);
 
     result.AddRows(row);
-    return Aws::TrinoQuery::Model::QueryOutcome(result);
+    return Aws::TimestreamQuery::Model::QueryOutcome(result);
   } else if (request.GetQueryString()
              == "select measure, time from mockDB.mockTable") {
-    Aws::TrinoQuery::Model::QueryResult result;
+    Aws::TimestreamQuery::Model::QueryResult result;
     SetupResultForMockTable(result);
-    return Aws::TrinoQuery::Model::QueryOutcome(result);
+    return Aws::TimestreamQuery::Model::QueryOutcome(result);
   } else if (request.GetQueryString()
              == "select measure, time from mockDB.mockTable10000") {
-    Aws::TrinoQuery::Model::QueryResult result;
+    Aws::TimestreamQuery::Model::QueryResult result;
     SetupResultForMockTable(result);
 
     // for pagination test
     result.SetNextToken(std::to_string(++token));
-    return Aws::TrinoQuery::Model::QueryOutcome(result);
+    return Aws::TimestreamQuery::Model::QueryOutcome(result);
   } else if (request.GetQueryString()
              == "select measure, time from mockDB.mockTable10Error") {
-    Aws::TrinoQuery::Model::QueryResult result;
+    Aws::TimestreamQuery::Model::QueryResult result;
     SetupResultForMockTable(result);
 
     // for pagination test
     if (errorToken < 3) {
       result.SetNextToken(std::to_string(++errorToken));
-      return Aws::TrinoQuery::Model::QueryOutcome(result);
+      return Aws::TimestreamQuery::Model::QueryOutcome(result);
     } else {
-      Aws::TrinoQuery::TrinoQueryError error(
+      Aws::TimestreamQuery::TimestreamQueryError error(
           Aws::Client::AWSError< Aws::Client::CoreErrors >(
               Aws::Client::CoreErrors::UNKNOWN, false));
 
-      return Aws::TrinoQuery::Model::QueryOutcome(error);
+      return Aws::TimestreamQuery::Model::QueryOutcome(error);
     }
   } else {
-    Aws::TrinoQuery::TrinoQueryError error(
+    Aws::TimestreamQuery::TimestreamQueryError error(
         Aws::Client::AWSError< Aws::Client::CoreErrors >(
             Aws::Client::CoreErrors::UNKNOWN, false));
 
-    return Aws::TrinoQuery::Model::QueryOutcome(error);
+    return Aws::TimestreamQuery::Model::QueryOutcome(error);
   }
 }
 }  // namespace odbc

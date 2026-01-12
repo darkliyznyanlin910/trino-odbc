@@ -43,7 +43,7 @@ cd aws-sdk-cpp
 mkdir install
 mkdir build
 cd build
-cmake ../ -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" -DCMAKE_INSTALL_PREFIX="../install" -DCMAKE_BUILD_TYPE="Release" -DBUILD_ONLY="core;sts;trino-query;trino-write" -DCUSTOM_MEMORY_MANAGEMENT="OFF" -DENABLE_TESTING="OFF" -DBUILD_SHARED_LIBS="OFF" -DCMAKE_TOOLCHAIN_FILE="${CMAKE_TOOLCHAIN_FILE}"
+cmake ../ -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" -DCMAKE_INSTALL_PREFIX="../install" -DCMAKE_BUILD_TYPE="Release" -DBUILD_ONLY="core;sts;timestream-query;timestream-write" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCUSTOM_MEMORY_MANAGEMENT="OFF" -DENABLE_TESTING="OFF" -DBUILD_SHARED_LIBS="OFF" -DCMAKE_TOOLCHAIN_FILE="${CMAKE_TOOLCHAIN_FILE}"
 make -j 4
 make install
 cd ../../../

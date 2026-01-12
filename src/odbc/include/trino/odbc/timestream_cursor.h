@@ -32,9 +32,9 @@
 
 /*#*/
 #include <aws/core/utils/memory/stl/AWSVector.h>
-#include <aws/trino-query/model/Row.h>
+#include <aws/timestream-query/model/Row.h>
 
-using client::TrinoQuery::Model::Row; /*#*/
+using client::TimestreamQuery::Model::Row; /*#*/
 
 namespace trino {
 namespace odbc {

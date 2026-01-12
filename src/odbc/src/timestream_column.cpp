@@ -24,11 +24,11 @@
 #include "trino/odbc/trino_column.h"
 #include "trino/odbc/utility.h"
 /*#*/
-#include <aws/trino-query/model/ColumnInfo.h>
-#include <aws/trino-query/model/TimeSeriesDataPoint.h>
+#include <aws/timestream-query/model/ColumnInfo.h>
+#include <aws/timestream-query/model/TimeSeriesDataPoint.h>
 
-using client::TrinoQuery::Model::ScalarType; /*#*/
-using client::TrinoQuery::Model::TimeSeriesDataPoint; /*#*/
+using client::TimestreamQuery::Model::ScalarType; /*#*/
+using client::TimestreamQuery::Model::TimeSeriesDataPoint; /*#*/
 using trino::odbc::type_traits::OdbcNativeType;
 
 namespace trino {
@@ -45,7 +45,7 @@ TrinoColumn::TrinoColumn(
 
 ConversionResult::Type TrinoColumn::ReadToBuffer(const Datum& datum, ApplicationDataBuffer& dataBuf) const {
   LOG_DEBUG_MSG("ReadToBuffer is called");
-  const boost::optional< client::TrinoQuery::Model::ColumnInfo >& columnInfo =
+  const boost::optional< client::TimestreamQuery::Model::ColumnInfo >& columnInfo =
       columnMeta_.GetColumnInfo(); /*@*/
 
   if (!columnInfo || !columnInfo->TypeHasBeenSet()) {
@@ -82,7 +82,7 @@ ConversionResult::Type TrinoColumn::ParseDatum(
 }
 
 ConversionResult::Type TrinoColumn::ParseScalarType(
-    const client::TrinoQuery::Model::Datum& datum,
+    const client::TimestreamQuery::Model::Datum& datum,
     ApplicationDataBuffer& dataBuf) const { /*@*/
   LOG_DEBUG_MSG("ParseScalarType is called");
 
