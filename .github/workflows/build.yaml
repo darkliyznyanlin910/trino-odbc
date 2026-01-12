@@ -1,0 +1,67 @@
+name: Build & Release Windows Driver
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+env:
+  VCPKG_ROOT: "c:/vcpkg"
+
+jobs:
+  build-windows64:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get latest version of CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Cache vcpkg dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.VCPKG_ROOT }}
+          key: ${{ runner.os }}-vcpkg-x64-v1
+
+      - name: Install dependencies
+        run: |
+          vcpkg integrate install
+          vcpkg install boost-test:x64-windows boost-asio:x64-windows boost-chrono:x64-windows boost-interprocess:x64-windows boost-regex:x64-windows boost-system:x64-windows boost-thread:x64-windows --recurse
+
+      - name: Build driver
+        run: .\build_win_release64.ps1
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trino-odbc-driver-win64
+          path: build/odbc/cmake/Release
+
+  release:
+    needs: build-windows64
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: trino-odbc-driver-win64
+          path: driver
+
+      - name: Zip artifacts
+        run: |
+          cd driver
+          zip -r ../trino-odbc-driver-win64.zip .
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: trino-odbc-driver-win64.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
