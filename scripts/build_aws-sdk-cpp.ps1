@@ -34,7 +34,7 @@ cmake $SRC_DIR `
     -D CMAKE_BUILD_TYPE=$CONFIGURATION `
     -D CMAKE_POLICY_VERSION_MINIMUM=3.5 `
     -D BUILD_ONLY="core;sts;timestream-query;timestream-write" `
-    -D LEGACY_BUILD=OFF `
+    -D LEGACY_BUILD=ON `
     -D ENABLE_UNITY_BUILD="ON" `
     -D CUSTOM_MEMORY_MANAGEMENT="OFF" `
     -D ENABLE_RTTI="OFF" `

@@ -5,6 +5,11 @@ on:
     tags:
       - "v*"
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to build"
+        required: true
+        default: "v1.0.0"
 
 env:
   VCPKG_ROOT: "c:/vcpkg"
@@ -22,15 +27,20 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Cache vcpkg dependencies
+        id: cache-vcpkg
         uses: actions/cache@v4
         with:
-          path: ${{ env.VCPKG_ROOT }}
-          key: ${{ runner.os }}-vcpkg-x64-v1
+          path: ${{ env.VCPKG_ROOT }}/installed
+          key: vcpkg-x64-windows-boost-${{ hashFiles('.github/workflows/build.yaml') }}
+          restore-keys: |
+            vcpkg-x64-windows-boost-
 
       - name: Install dependencies
         run: |
           vcpkg integrate install
           vcpkg install boost-test:x64-windows boost-asio:x64-windows boost-chrono:x64-windows boost-interprocess:x64-windows boost-regex:x64-windows boost-system:x64-windows boost-thread:x64-windows --recurse
+        env:
+          VCPKG_INSTALLED_DIR: ${{ env.VCPKG_ROOT }}/installed
 
       - name: Build driver
         run: .\build_win_release64.ps1
